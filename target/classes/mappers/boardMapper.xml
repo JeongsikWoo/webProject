@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.almom.mapper.BoardMapper">
+
+ <insert id="create">
+ insert into CLASS (class_name, class_regdate, class_category, class_type, class_minStudentNum, class_maxStudentNum,
+ class_currentStudentNum, class_coverImagePath, class_tutorIntroduce, class_classIntroduce, class_target,
+ class_pricePerHour, class_timePerDay, class_dayPerMonth, class_price, class_placeComment, class_notice,
+ class_status, tutor_id) 
+ values(#{class_name}, #{class_regdate}, #{class_category}, #{class_type}, #{class_minStudentNum}, #{class_maxStudentNum},
+ #{class_currentStudentNum}, #{class_coverImagePath}, #{class_tutorIntroduce}, #{class_classIntroduce}, #{class_target},
+ #{class_pricePerHour}, #{class_timePerDay}, #{class_dayPerMonth}, #{class_price}, #{class_placeComment}, #{class_notice},
+ #{class_status}, #{tutor_id})
+ </insert>
+
+ <select id="read" resultType="com.almom.domain.BoardVO">
+ select 
+   class_id, class_name, class_regdate, class_category, class_type,
+   class_minStudentNum, class_maxStudentNum, class_currentStudentNum,
+   class_coverImagePath, class_tutorIntroduce, class_classIntroduce,
+   class_target, class_pricePerHour, class_timePerDay, class_dayPerMonth,
+   class_price, class_placeComment, class_notice, class_status, tutor_id
+ from 
+   CLASS 
+ where
+   class_id = #{class_id}
+ </select>
+
+ <update id="update">
+ update CLASS  set class_name =#{class_name}, class_category =#{class_category}, class_type =#{class_type}, class_minStudentNum =#{class_minStudentNum}, class_maxStudentNum =#{class_maxStudentNum}, class_currentStudentNum =#{class_currentStudentNum}, class_coverImagePath =#{class_coverImagePath}, class_tutorIntroduce =#{class_tutorIntroduce}, class_classIntroduce =#{class_classIntroduce}, class_target =#{class_target}, class_pricePerHour =#{class_pricePerHour}, class_timePerDay =#{class_timePerDay}, class_dayPerMonth =#{class_dayPerMonth}, class_price =#{class_price}, class_placeComment =#{class_placeComment}, class_notice =#{class_notice} 
+ where class_id = #{class_id}
+ </update>
+
+ <delete id="delete">
+ delete from CLASS where class_id = #{class_id}
+ </delete>
+
+ <select id="listAll" resultType="com.almom.domain.BoardVO">
+ <![CDATA[
+ select 
+   class_id, class_name, class_regdate, tutor_id 
+ from 
+   CLASS
+ where class_id > 0 
+ order by class_id desc, class_regdate desc
+ ]]>  
+ </select>
+ 
+ <select id="listPage" resultType="BoardVO">
+ <![CDATA[
+ select 
+   class_id, class_name, class_regdate, tutor_id 
+ from 
+   CLASS
+ where class_id > 0 
+ order by class_id desc, class_regdate desc
+ limit #{page}, 10
+ ]]>
+ </select>
+
+ <select id="listCriteria" resultType="BoardVO">
+ <![CDATA[
+ select 
+   class_id, class_name, class_regdate, tutor_id
+ from 
+   CLASS 
+ where class_id > 0
+ order by class_id desc, class_regdate desc
+ limit #{pageStart}, #{perPageNum}
+ ]]>
+ </select>
+
+
+
+ <select id="countPaging" resultType="int">
+ <![CDATA[
+ select 
+   count(class_id) 
+ from 
+   CLASS
+ where 
+   class_id > 0 
+ ]]>
+ </select>
+
+
+
+<sql id="search">
+ <if test="searchType != null" > 
+   <if test="searchType == 't'.toString()">
+     and class_name like CONCAT('%', #{keyword}, '%')
+   </if>
+   <if test="searchType == 'c'.toString()">
+     and content like CONCAT('%', #{keyword}, '%')
+   </if>
+   <if test="searchType == 'w'.toString()">
+     and tutor_id like CONCAT('%', #{keyword}, '%')
+   </if>     
+   <if test="searchType == 'tc'.toString()">
+     and ( class_name like CONCAT('%', #{keyword}, '%') OR content like CONCAT('%', #{keyword}, '%'))
+   </if>        
+   <if test="searchType == 'cw'.toString()">
+     and ( content like CONCAT('%', #{keyword}, '%') OR tutor_id like CONCAT('%', #{keyword}, '%'))
+   </if>        
+   <if test="searchType == 'tcw'.toString()">
+     and (   class_name like CONCAT('%', #{keyword}, '%') 
+           OR 
+             content like CONCAT('%', #{keyword}, '%') 
+           OR 
+             tutor_id like CONCAT('%', #{keyword}, '%'))
+   </if>              
+ </if>  
+</sql>
+ 
+<select id="listSearch" resultType="BoardVO">
+<![CDATA[  
+  select * 
+  from CLASS 
+  where class_id > 0 
+]]>  
+
+  <include refid="search"></include>
+  
+<![CDATA[    
+  order by class_id desc
+  limit #{pageStart}, #{perPageNum}
+]]>  
+</select>
+  
+<select id="listSearchCount" resultType="int">
+<![CDATA[  
+  select count(class_id) 
+  from CLASS
+  where class_id > 0 
+]]>
+  <include refid="search"></include>
+ 
+</select>  
+  
+</mapper>
