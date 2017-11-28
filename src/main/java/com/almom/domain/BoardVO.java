@@ -22,8 +22,8 @@ public class BoardVO {
 	private String class_placeComment;
 	private String class_notice;
 	private Integer class_status;
-	private Integer tutor_id;
-	
+	private Integer TUTOR_tutor_id;
+	private Integer TUTOR_USER_user_id;
 	
 	public Integer getClass_id() {
 		return class_id;
@@ -53,7 +53,7 @@ public class BoardVO {
 		return class_type;
 	}
 	public void setClass_type(Integer class_type) {
-		this.class_type=class_type;
+		this.class_type = class_type;
 	}
 	public Integer getClass_minStudentNum() {
 		return class_minStudentNum;
@@ -139,36 +139,28 @@ public class BoardVO {
 	public void setClass_status(Integer class_status) {
 		this.class_status = class_status;
 	}
-	public Integer getTutor_id() {
-		return tutor_id;
+	public Integer getTUTOR_tutor_id() {
+		return TUTOR_tutor_id;
 	}
-	public void setTutor_id(Integer tutor_id) {
-		this.tutor_id = tutor_id;
+	public void setTUTOR_tutor_id(Integer TUTOR_tutor_id) {
+		TUTOR_tutor_id = TUTOR_tutor_id;
 	}
-	
-
+	public Integer getTUTOR_USER_user_id() {
+		return TUTOR_USER_user_id;
+	}
+	public void setTUTOR_USER_user_id(Integer TUTOR_USER_user_id) {
+		TUTOR_USER_user_id = TUTOR_USER_user_id;
+	}
 	@Override
 	public String toString() {
-		return "BoardVO [class_id=" + class_id
-				+ ", class_name=" + class_name
-				+ ", class_regdate=" + class_regdate
-				+ ", class_category=" + class_category
-				+ ", class_type=" + class_type
-				+ ", class_minStudentNum=" + class_minStudentNum
-				+ ", class_maxStudentNum=" + class_maxStudentNum
-				+ ", class_currentStudentNum=" + class_currentStudentNum
-				+ ", class_coverImagePath=" + class_coverImagePath
-				+ ", class_tutorIntroduce" + class_tutorIntroduce
-				+ ", class_classIntroduce=" + class_tutorIntroduce
-				+ ", class_target=" + class_target
-				+ ", class_pricePerHour=" + class_pricePerHour
-				+ ", class_timePerDay=" + class_timePerDay
-				+ ", class_dayPerMonth=" + class_dayPerMonth
-				+ ", class_price=" + class_price
-				+ ", class_placeComment" + class_placeComment
-				+ ", class_notice=" + class_notice
-				+ ", class_status=" + class_status
-				+ ", tutor_id=" + tutor_id
-				+ "]";
+		return "BoardVO [class_id=" + class_id + ", class_name=" + class_name + ", class_regdate=" + class_regdate
+				+ ", class_category=" + class_category + ", class_type=" + class_type + ", class_minStudentNum="
+				+ class_minStudentNum + ", class_maxStudentNum=" + class_maxStudentNum + ", class_currentStudentNum="
+				+ class_currentStudentNum + ", class_coverImagePath=" + class_coverImagePath + ", class_tutorIntroduce="
+				+ class_tutorIntroduce + ", class_classIntroduce=" + class_classIntroduce + ", class_target="
+				+ class_target + ", class_pricePerHour=" + class_pricePerHour + ", class_timePerDay=" + class_timePerDay
+				+ ", class_dayPerMonth=" + class_dayPerMonth + ", class_price=" + class_price + ", class_placeComment="
+				+ class_placeComment + ", class_notice=" + class_notice + ", class_status=" + class_status
+				+ ", TUTOR_tutor_id=" + TUTOR_tutor_id + ", TUTOR_USER_user_id=" + TUTOR_USER_user_id + "]";
 	}
 }

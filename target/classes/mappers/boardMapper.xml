@@ -6,14 +6,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="com.almom.mapper.BoardMapper">
 
  <insert id="create">
- insert into CLASS (class_name, class_regdate, class_category, class_type, class_minStudentNum, class_maxStudentNum,
+ insert into CLASS (class_name, class_category, class_type, class_minStudentNum, class_maxStudentNum,
  class_currentStudentNum, class_coverImagePath, class_tutorIntroduce, class_classIntroduce, class_target,
  class_pricePerHour, class_timePerDay, class_dayPerMonth, class_price, class_placeComment, class_notice,
- class_status, tutor_id) 
- values(#{class_name}, #{class_regdate}, #{class_category}, #{class_type}, #{class_minStudentNum}, #{class_maxStudentNum},
+ class_status, TUTOR_tutor_id, TUTOR_USER_user_id) 
+ values(#{class_name}, #{class_category}, #{class_type}, #{class_minStudentNum}, #{class_maxStudentNum},
  #{class_currentStudentNum}, #{class_coverImagePath}, #{class_tutorIntroduce}, #{class_classIntroduce}, #{class_target},
  #{class_pricePerHour}, #{class_timePerDay}, #{class_dayPerMonth}, #{class_price}, #{class_placeComment}, #{class_notice},
- #{class_status}, #{tutor_id})
+ #{class_status}, #{TUTOR_tutor_id}, #{TUTOR_USER_user_id})
  </insert>
 
  <select id="read" resultType="com.almom.domain.BoardVO">
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    class_minStudentNum, class_maxStudentNum, class_currentStudentNum,
    class_coverImagePath, class_tutorIntroduce, class_classIntroduce,
    class_target, class_pricePerHour, class_timePerDay, class_dayPerMonth,
-   class_price, class_placeComment, class_notice, class_status, tutor_id
+   class_price, class_placeComment, class_notice, class_status, TUTOR_tutor_id
  from 
    CLASS 
  where
@@ -41,7 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  <select id="listAll" resultType="com.almom.domain.BoardVO">
  <![CDATA[
  select 
-   class_id, class_name, class_regdate, tutor_id 
+   class_id, class_name, class_regdate, TUTOR_tutor_id 
  from 
    CLASS
  where class_id > 0 
@@ -52,7 +52,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  <select id="listPage" resultType="BoardVO">
  <![CDATA[
  select 
-   class_id, class_name, class_regdate, tutor_id 
+   class_id, class_name, class_regdate, TUTOR_tutor_id 
  from 
    CLASS
  where class_id > 0 
@@ -64,7 +64,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  <select id="listCriteria" resultType="BoardVO">
  <![CDATA[
  select 
-   class_id, class_name, class_regdate, tutor_id
+   class_id, class_name, class_regdate, TUTOR_tutor_id
  from 
    CLASS 
  where class_id > 0
@@ -72,8 +72,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  limit #{pageStart}, #{perPageNum}
  ]]>
  </select>
-
-
 
  <select id="countPaging" resultType="int">
  <![CDATA[
@@ -86,8 +84,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  ]]>
  </select>
 
-
-
 <sql id="search">
  <if test="searchType != null" > 
    <if test="searchType == 't'.toString()">
@@ -97,20 +93,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      and content like CONCAT('%', #{keyword}, '%')
    </if>
    <if test="searchType == 'w'.toString()">
-     and tutor_id like CONCAT('%', #{keyword}, '%')
+     and TUTOR_tutor_id like CONCAT('%', #{keyword}, '%')
    </if>     
    <if test="searchType == 'tc'.toString()">
      and ( class_name like CONCAT('%', #{keyword}, '%') OR content like CONCAT('%', #{keyword}, '%'))
    </if>        
    <if test="searchType == 'cw'.toString()">
-     and ( content like CONCAT('%', #{keyword}, '%') OR tutor_id like CONCAT('%', #{keyword}, '%'))
+     and ( content like CONCAT('%', #{keyword}, '%') OR TUTOR_tutor_id like CONCAT('%', #{keyword}, '%'))
    </if>        
    <if test="searchType == 'tcw'.toString()">
      and (   class_name like CONCAT('%', #{keyword}, '%') 
            OR 
              content like CONCAT('%', #{keyword}, '%') 
            OR 
-             tutor_id like CONCAT('%', #{keyword}, '%'))
+             TUTOR_tutor_id like CONCAT('%', #{keyword}, '%'))
    </if>              
  </if>  
 </sql>
@@ -138,6 +134,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 ]]>
   <include refid="search"></include>
  
-</select>  
+</select>
   
 </mapper>

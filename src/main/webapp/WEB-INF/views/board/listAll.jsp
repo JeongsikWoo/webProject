@@ -24,7 +24,7 @@
 						<tr>
 							<th style="width: 10px">class_id</th>
 							<th>class_name</th>
-							<th>tutor_id</th>
+							<th>TUTOR_tutor_id</th>
 							<th>class_regdate</th>
 						</tr>
 
@@ -32,7 +32,7 @@
 						<tr>
 							<td>${boardVO.class_id}</td>
 							<td><a href='/board/read?class_id=${boardVO.class_id}'>${boardVO.class_name}</a></td>
-							<td>${boardVO.tutor_id}</td>
+							<td>${boardVO.TUTOR_tutor_id}</td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
 									value="${boardVO.class_regdate}" /></td>
 						</tr>
