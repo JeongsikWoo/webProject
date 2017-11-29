@@ -9,11 +9,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  insert into CLASS (class_name, class_category, class_type, class_minStudentNum, class_maxStudentNum,
  class_currentStudentNum, class_coverImagePath, class_tutorIntroduce, class_classIntroduce, class_target,
  class_pricePerHour, class_timePerDay, class_dayPerMonth, class_price, class_placeComment, class_notice,
- class_status, TUTOR_tutor_id, TUTOR_USER_user_id) 
+ class_status, class_score, TUTOR_tutor_id, TUTOR_USER_user_id) 
  values(#{class_name}, #{class_category}, #{class_type}, #{class_minStudentNum}, #{class_maxStudentNum},
  #{class_currentStudentNum}, #{class_coverImagePath}, #{class_tutorIntroduce}, #{class_classIntroduce}, #{class_target},
  #{class_pricePerHour}, #{class_timePerDay}, #{class_dayPerMonth}, #{class_price}, #{class_placeComment}, #{class_notice},
- #{class_status}, #{TUTOR_tutor_id}, #{TUTOR_USER_user_id})
+ #{class_status}, 5.0, #{TUTOR_tutor_id}, #{TUTOR_USER_user_id})
  </insert>
 
  <select id="read" resultType="com.almom.domain.BoardVO">
@@ -22,7 +22,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    class_minStudentNum, class_maxStudentNum, class_currentStudentNum,
    class_coverImagePath, class_tutorIntroduce, class_classIntroduce,
    class_target, class_pricePerHour, class_timePerDay, class_dayPerMonth,
-   class_price, class_placeComment, class_notice, class_status, TUTOR_tutor_id
+   class_price, class_placeComment, class_notice, class_status, class_score, TUTOR_tutor_id
  from 
    CLASS 
  where
@@ -30,7 +30,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  </select>
 
  <update id="update">
- update CLASS  set class_name =#{class_name}, class_category =#{class_category}, class_type =#{class_type}, class_minStudentNum =#{class_minStudentNum}, class_maxStudentNum =#{class_maxStudentNum}, class_currentStudentNum =#{class_currentStudentNum}, class_coverImagePath =#{class_coverImagePath}, class_tutorIntroduce =#{class_tutorIntroduce}, class_classIntroduce =#{class_classIntroduce}, class_target =#{class_target}, class_pricePerHour =#{class_pricePerHour}, class_timePerDay =#{class_timePerDay}, class_dayPerMonth =#{class_dayPerMonth}, class_price =#{class_price}, class_placeComment =#{class_placeComment}, class_notice =#{class_notice} 
+ update CLASS  set class_id =#{class_id}, class_name =#{class_name}, class_regdate =#{class_regdate}, class_category =#{class_category},
+ class_type =#{class_type}, class_minStudentNum =#{class_minStudentNum}, class_maxStudentNum =#{class_maxStudentNum},
+ class_coverImagePath =#{class_coverImagePath}, class_tutorIntroduce =#{class_tutorIntroduce}, class_classIntroduce =#{class_classIntroduce},
+ class_target =#{class_target}, class_pricePerHour =#{class_pricePerHour}, class_timePerDay =#{class_timePerDay}, class_dayPerMonth =#{class_dayPerMonth}, class_price =#{class_price},
+ class_placeComment =#{class_placeComment}, class_notice =#{class_notice}, class_status =#{class_status}
  where class_id = #{class_id}
  </update>
 
@@ -41,11 +45,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  <select id="listAll" resultType="com.almom.domain.BoardVO">
  <![CDATA[
  select 
-   class_id, class_name, class_regdate, TUTOR_tutor_id 
+   c.TUTOR_tutor_id, c.class_id, c.class_regdate, c.class_coverImagePath, c.class_name, c.class_pricePerHour, c.class_type, c.class_score,
+   t.tutor_id, t.tutor_name, u.user_profileImagePath
  from 
-   CLASS
- where class_id > 0 
- order by class_id desc, class_regdate desc
+   CLASS c, TUTOR t, USER u
+ where
+ 	(c.TUTOR_tutor_id=t.tutor_id
+ AND
+	t.USER_user_id = u.user_id)
+ ORDER BY c.class_regdate DESC;
  ]]>  
  </select>
  

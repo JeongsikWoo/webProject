@@ -10,71 +10,59 @@
 			<!-- general form elements -->
 			<div class="box box-primary">
 				<div class="box-header">
-					<h3 class="box-title">READ BOARD</h3>
+					<h3 class="box-title">수업내용보기</h3>
 				</div>
 				<!-- /.box-header -->
 
 <form role="form" method="post">
-
 	<input type='hidden' name='class_id' value="${boardVO.class_id}">
-
 </form>
 
 <div class="box-body">
-	<div class="form-group">
-		<label for="exampleInputEmail1">class_name</label> <input type="text"
-			name='class_name' class="form-control" value="${boardVO.class_name}"
-			readonly="readonly">
-	</div>
-	<div class="form-group">
-		<label for="exampleInputPassword1">Content</label>
-		<textarea class="form-control" name="content" rows="3"
-			readonly="readonly">${boardVO.content}</textarea>
-	</div>
-	<div class="form-group">
-		<label for="exampleInputEmail1">Writer</label> <input type="text"
-			name="writer" class="form-control" value="${boardVO.writer}"
-			readonly="readonly">
-	</div>
+	<tr><td>튜터정보</td></tr>
+	<tr><td>${boardVO.class_tutorIntroduce}</td></tr>
+	<tr><td>수업소개</td></tr>
+	<tr><td>${boardVO.class_classIntroduce}</td></tr>
+	<tr><td>수업대상</td></tr>
+	<tr><td>${boardVO.class_target}</td></tr>
+	<tr><td>커리큘럼</td></tr>
+	<tr><td>1회차</td></tr>
+	<tr><td>2회차</td></tr>
+	<tr><td>3회차</td></tr>
+	<tr><td>4회차</td></tr>
+	<tr><td>리뷰</td></tr>
 </div>
 <!-- /.box-body -->
 
 <div class="box-footer">
-	<button type="submit" class="btn btn-warning">Modify</button>
-	<button type="submit" class="btn btn-danger">REMOVE</button>
-	<button type="submit" class="btn btn-primary">LIST ALL</button>
+	<button type="submit" class="btn-modify">Modify</button>
+	<button type="submit" class="btn-remove">REMOVE</button>
+	<button type="submit" class="btn-listall">LIST ALL</button>
 </div>
 
-
-				<script>
-				
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">	
 $(document).ready(function(){
-	
 	var formObj = $("form[role='form']");
 	
-	console.log(formObj);
-	
-	$(".btn-warning").on("click", function(){
+	$(".btn-modify").on("click", function(){
 		formObj.attr("action", "/board/modify");
 		formObj.attr("method", "get");		
 		formObj.submit();
 	});
 	
-	$(".btn-danger").on("click", function(){
+	$(".btn-remove").on("click", function(){
 		formObj.attr("action", "/board/remove");
 		formObj.submit();
 	});
 	
-	$(".btn-primary").on("click", function(){
+	$(".btn-listall").on("click", function(){
 		self.location = "/board/listAll";
 	});
 	
 });
-
 </script>
-
-
-
 
 			</div>
 			<!-- /.box -->

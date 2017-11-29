@@ -53,7 +53,7 @@ public class BoardDAOTest {
     board.setClass_placeComment("장소 코멘트");
     board.setClass_notice("공지");
     board.setClass_status(1);
-    board.setTutor_id(001);
+    board.setTUTOR_tutor_id(001);
     dao.create(board);
   }
   

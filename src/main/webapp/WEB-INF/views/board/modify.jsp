@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <!-- Main content -->
 <section class="content">
@@ -10,24 +9,25 @@
 			<!-- general form elements -->
 			<div class="box box-primary">
 				<div class="box-header">
-					<h3 class="box-title">수업을 등록하세요.</h3>
+					<h3 class="box-title">READ BOARD</h3>
 				</div>
 				<!-- /.box-header -->
 
 <form role="form" method="post">
+
 	<div class="box-body">
 		<div>
 			<b>status</b><br>
-			<input type="text" name='class_status' style="width:100px"><br><br>
+			<input type="text" name='class_status' style="width:100px" value="${boardVO.class_status}"><br><br>
 			
 			<b>튜터 아이디를 입력하세요</b><br>
-			<input type="text" name='TUTOR_tutor_id' style="width:100px"><br><br>
+			<input type="text" name='TUTOR_tutor_id' style="width:100px" value="${boardVO.TUTOR_tutor_id}"><br><br>
 			
 			<b>튜터 유저아이디를 입력하세요</b><br>
-			<input type="text" name='TUTOR_USER_user_id' style="width:100px"><br><br>
+			<input type="text" name='TUTOR_USER_user_id' style="width:100px" value="${boardVO.TUTOR_USER_user_id}"><br><br>
 			
 			<b>수업 제목(20자 이내)</b><br>
-			<input type="text" name='class_name' style="text-align:center; width:300px" placeholder="제목에서부터 튜터님의 매력을 마음껏 뿜어내 주세요."><br>
+			<input type="text" name='class_name' style="text-align:center; width:300px" placeholder="제목에서부터 튜터님의 매력을 마음껏 뿜어내 주세요." value="${boardVO.class_name}"><br>
 				ex. 엑셀, 인턴/입사 전에 배워가자!<br><br>
 				
 			<b>수업 카테고리</b><br>
@@ -68,12 +68,11 @@
 			 	<option value="8">8</option>
 			 	<option value="9">9</option>
   			</select>
-  			<input type="text" name='class_currentStudentNum' style="width:100px">
 			<br><br>
 			
 			<b>커버 사진등록</b><br>
 			<input type="button" value="이미지등록">
-			<input name='class_coverImagePath' type="text" name='class_coverImagePath' style="width:300px" placeholder="커버사진 주소 string입력">
+			<input name='class_coverImagePath' type="text" name='class_coverImagePath' style="width:300px" placeholder="커버사진 주소 string입력" value="${boardVO.class_coverImagePath}">
 			<br><br>
 			
 			<b>사진 등록(권장 6장)</b><br>
@@ -87,11 +86,11 @@
 		
 		<div>
 			<b>튜터소개</b><br>
-			<textarea name='class_tutorIntroduce' rows="10" style="text-align:center; width:500px; height:200px; letter-spacing: 1px;"></textarea><br><br>
+			<textarea name='class_tutorIntroduce' rows="10" style="text-align:center; width:500px; height:200px; letter-spacing: 1px;" value="${boardVO.class_tutorIntroduce}"></textarea><br><br>
 			<b>수업소개</b><br>
-			<textarea name='class_classIntroduce' rows="10" style="text-align:center; width:500px; height:200px; letter-spacing: 1px;"></textarea><br><br>
+			<textarea name='class_classIntroduce' rows="10" style="text-align:center; width:500px; height:200px; letter-spacing: 1px;" value="${boardVO.class_classIntroduce}"></textarea><br><br>
 			<b>수업대상</b><br>
-			<textarea name='class_target' rows="10" style="text-align:center; width:500px; height:200px; letter-spacing: 1px;"placeholder="어떤분들을 대상으로 하는 수업인가요?"></textarea><br><br>
+			<textarea name='class_target' rows="10" style="text-align:center; width:500px; height:200px; letter-spacing: 1px;"placeholder="어떤분들을 대상으로 하는 수업인가요?" value="${boardVO.class_target}"></textarea><br><br>
 			
 			<b>커리큘럼등록</b><br>
 			1회차
@@ -114,7 +113,7 @@
 		</div>
 		
 		<div>
-			<b>시간당 가격</b> <input type="text" name='class_pricePerHour'> 원<br>
+			<b>시간당 가격</b> <input type="text" name='class_pricePerHour' value="${boardVO.class_pricePerHour}"> 원<br>
 			<b>기본수업시간</b>
 			<select name='class_timePerDay'>
   				<option>선택하세요</option>
@@ -125,8 +124,8 @@
 			 	<option value="5">5시간</option>
 			    <option value="6">6시간</option>
   			</select> / 1회<br>
-			<b>총 수업(한달기준)</b> <input type="text" name="class_dayPerMonth"> 회<br>
-			<b>총 수업 가격</b><br> <textarea name="class_price" rows="10" style="text-align:center; width:300px; height:100px; letter-spacing: 1px;" placeholder="총 0원, 연결수수료 0원"></textarea><br><br>
+			<b>총 수업(한달기준)</b> <input type="text" name="class_dayPerMonth" value="${boardVO.class_dayPerMonth}"> 회<br>
+			<b>총 수업 가격</b><br> <textarea name="class_price" rows="10" style="text-align:center; width:300px; height:100px; letter-spacing: 1px;" placeholder="총 0원, 연결수수료 0원" value="${boardVO.class_price}"></textarea><br><br>
 		</div>
 		
 		<div>
@@ -154,18 +153,35 @@
 			<br><br>
 			
 			<b>수업장소 코멘트</b><br>
-			<textarea name="class_placeComment" rows="10" style="text-align:center; width:500px; height:200px; letter-spacing: 1px;" placeholder="신청자분들이 수업장소와 시간에 대해 알면 좋은 사항들이 있나요?"></textarea><br><br>
+			<textarea name="class_placeComment" rows="10" style="text-align:center; width:500px; height:200px; letter-spacing: 1px;" placeholder="신청자분들이 수업장소와 시간에 대해 알면 좋은 사항들이 있나요?" value="${boardVO.class_placeComment}"></textarea><br><br>
 			<b>신청 학생에게 보낼 메시지</b><br>
-			<textarea name="class_notice" rows="10" style="text-align:center; width:500px; height:200px; letter-spacing: 1px;" placeholder="수강생과 수업 연결 시에 메시지가 전달됩니다."></textarea><br><br>
+			<textarea name="class_notice" rows="10" style="text-align:center; width:500px; height:200px; letter-spacing: 1px;" placeholder="수강생과 수업 연결 시에 메시지가 전달됩니다." value="${boardVO.class_notice}"></textarea><br><br>
 		</div>
 	</div>
 	<!-- /.box-body -->
-
-	<div class="box-footer">
-		<button type="submit" class="btn btn-primary">임시저장</button>
-		<button type="submit" class="btn btn-primary">승인요청</button>
-	</div>
 </form>
+
+
+<div class="box-footer">
+	<button type="submit" class="btn-save">SAVE</button>
+	<button type="submit" class="btn-cancel">CANCEL</button>
+</div>
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var formObj = $("form[role='form']");
+
+		$(".btn-cancel").on("click", function() {
+			self.location = "/board/listAll";
+		});
+		$(".btn-save").on("click", function() {
+			formObj.submit();
+		});
+	});
+</script>
+
 			</div>
 			<!-- /.box -->
 		</div>

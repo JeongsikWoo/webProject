@@ -19,116 +19,115 @@ import com.almom.service.BoardService;
 @RequestMapping("/board/*")
 public class BoardController {
 
-  private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 
-  @Inject
-  private BoardService service;
+	@Inject
+	private BoardService service;
 
-  @RequestMapping(value = "/register", method = RequestMethod.GET)
-  public void registerGET(BoardVO board, Model model) throws Exception {
+	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	public void registerGET(BoardVO board, Model model) throws Exception {
 
-    logger.info("register get ...........");
-  }
+		logger.info("register get ...........");
+	}
 
-  @RequestMapping(value = "/register", method = RequestMethod.POST)
-  public String registPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public String registPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
 
-    logger.info("regist post ...........");
-    logger.info(board.toString());
+		logger.info("regist post ...........");
+		logger.info(board.toString());
 
-    service.regist(board);
+		service.regist(board);
 
-    rttr.addFlashAttribute("msg", "success");
-    return "redirect:/board/listAll";
-  }
+		rttr.addFlashAttribute("msg", "success");
+		return "redirect:/board/listAll";
+	}
 
-  @RequestMapping(value = "/listAll", method = RequestMethod.GET)
-  public void listAll(Model model) throws Exception {
+	@RequestMapping(value = "/listAll", method = RequestMethod.GET)
+	public void listAll(Model model) throws Exception {
 
-    logger.info("show all list......................");
-    model.addAttribute("list", service.listAll());
-  }
+		logger.info("show all list......................");
+		model.addAttribute("list", service.listAll());
+	}
 
-  @RequestMapping(value = "/read", method = RequestMethod.GET)
-  public void read(@RequestParam("class_id") int class_id, Model model) throws Exception {
+	@RequestMapping(value = "/read", method = RequestMethod.GET)
+	public void read(@RequestParam("class_id") int class_id, Model model) throws Exception {
 
-    model.addAttribute(service.read(class_id));
-  }
+		model.addAttribute(service.read(class_id));
+	}
 
-  @RequestMapping(value = "/remove", method = RequestMethod.POST)
-  public String remove(@RequestParam("class_id") int class_id, RedirectAttributes rttr) throws Exception {
+	@RequestMapping(value = "/remove", method = RequestMethod.POST)
+	public String remove(@RequestParam("class_id") int class_id, RedirectAttributes rttr) throws Exception {
 
-    service.remove(class_id);
+		service.remove(class_id);
 
-    rttr.addFlashAttribute("msg", "SUCCESS");
+		rttr.addFlashAttribute("msg", "SUCCESS");
 
-    return "redirect:/board/listAll";
-  }
+		return "redirect:/board/listAll";
+	}
 
-  @RequestMapping(value = "/modify", method = RequestMethod.GET)
-  public void modifyGET(int class_id, Model model) throws Exception {
+	@RequestMapping(value = "/modify", method = RequestMethod.GET)
+	public void modifyGET(int class_id, Model model) throws Exception {
 
-    model.addAttribute(service.read(class_id));
-  }
+		model.addAttribute(service.read(class_id));
+	}
 
-  @RequestMapping(value = "/modify", method = RequestMethod.POST)
-  public String modifyPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
+	@RequestMapping(value = "/modify", method = RequestMethod.POST)
+	public String modifyPOST(BoardVO board, RedirectAttributes rttr) throws Exception {
 
-    logger.info("mod post............");
+		logger.info("mod post............");
 
-    service.modify(board);
-    rttr.addFlashAttribute("msg", "SUCCESS");
+		service.modify(board);
+		rttr.addFlashAttribute("msg", "SUCCESS");
 
-    return "redirect:/board/listAll";
-  }
+		return "redirect:/board/listAll";
+	}
 
-  @RequestMapping(value = "/listCri", method = RequestMethod.GET)
-  public void listAll(Criteria cri, Model model) throws Exception {
+	@RequestMapping(value = "/listCri", method = RequestMethod.GET)
+	public void listAll(Criteria cri, Model model) throws Exception {
 
-    logger.info("show list Page with Criteria......................");
+		logger.info("show list Page with Criteria......................");
 
-    model.addAttribute("list", service.listCriteria(cri));
-  }
-/*
-  @RequestMapping(value = "/listPage", method = RequestMethod.GET)
-  public void listPage(@ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+		model.addAttribute("list", service.listCriteria(cri));
+	}
+	/*
+	 * @RequestMapping(value = "/listPage", method = RequestMethod.GET) public void
+	 * listPage(@ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+	 * 
+	 * logger.info(cri.toString());
+	 * 
+	 * model.addAttribute("list", service.listCriteria(cri)); PageMaker pageMaker =
+	 * new PageMaker(); pageMaker.setCri(cri); // pageMaker.setTotalCount(131);
+	 * 
+	 * pageMaker.setTotalCount(service.listCountCriteria(cri));
+	 * 
+	 * model.addAttribute("pageMaker", pageMaker); }
+	 */
 
-    logger.info(cri.toString());
+	@RequestMapping(value = "/readPage", method = RequestMethod.GET)
+	public void read(@RequestParam("class_id") int class_id, @ModelAttribute("cri") Criteria cri, Model model)
+			throws Exception {
 
-    model.addAttribute("list", service.listCriteria(cri));
-    PageMaker pageMaker = new PageMaker();
-    pageMaker.setCri(cri);
-    // pageMaker.setTotalCount(131);
+		model.addAttribute(service.read(class_id));
+	}
 
-    pageMaker.setTotalCount(service.listCountCriteria(cri));
+	@RequestMapping(value = "/removePage", method = RequestMethod.POST)
+	public String remove(@RequestParam("class_id") int class_id, Criteria cri, RedirectAttributes rttr)
+			throws Exception {
 
-    model.addAttribute("pageMaker", pageMaker);
-  }
-  */
+		service.remove(class_id);
 
-  @RequestMapping(value = "/readPage", method = RequestMethod.GET)
-  public void read(@RequestParam("class_id") int class_id, @ModelAttribute("cri") Criteria cri, Model model) throws Exception {
+		rttr.addAttribute("page", cri.getPage());
+		rttr.addAttribute("perPageNum", cri.getPerPageNum());
+		rttr.addFlashAttribute("msg", "SUCCESS");
 
-    model.addAttribute(service.read(class_id));
-  }
+		return "redirect:/board/listPage";
+	}
 
-  @RequestMapping(value = "/removePage", method = RequestMethod.POST)
-  public String remove(@RequestParam("class_id") int class_id, Criteria cri, RedirectAttributes rttr) throws Exception {
+	@RequestMapping(value = "/modifyPage", method = RequestMethod.GET)
+	public void modifyPagingGET(@RequestParam("class_id") int class_id, @ModelAttribute("cri") Criteria cri,
+			Model model) throws Exception {
 
-    service.remove(class_id);
-
-    rttr.addAttribute("page", cri.getPage());
-    rttr.addAttribute("perPageNum", cri.getPerPageNum());
-    rttr.addFlashAttribute("msg", "SUCCESS");
-
-    return "redirect:/board/listPage";
-  }
-
-  @RequestMapping(value = "/modifyPage", method = RequestMethod.GET)
-  public void modifyPagingGET(@RequestParam("class_id") int class_id, @ModelAttribute("cri") Criteria cri, Model model)
-      throws Exception {
-
-    model.addAttribute(service.read(class_id));
-  }
+		model.addAttribute(service.read(class_id));
+	}
 
 }
