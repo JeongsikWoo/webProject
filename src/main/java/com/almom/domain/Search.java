@@ -1,6 +1,6 @@
 package com.almom.domain;
 
-public class SearchCriteria extends Criteria {
+public class Search {
 	private String searchType;
 	private String keyword;
 

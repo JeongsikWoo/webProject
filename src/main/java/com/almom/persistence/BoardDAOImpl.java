@@ -8,8 +8,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
 import com.almom.domain.BoardVO;
-import com.almom.domain.Criteria;
-import com.almom.domain.SearchCriteria;
+import com.almom.domain.Search;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -45,38 +44,14 @@ public class BoardDAOImpl implements BoardDAO {
   }
 
   @Override
-  public List<BoardVO> listPage(int page) throws Exception {
+  public List<BoardVO> listSearch(Search sch) throws Exception {
 
-    if (page <= 0) {
-      page = 1;
-    }
-
-    page = (page - 1) * 10;
-
-    return session.selectList(namespace + ".listPage", page);
+    return session.selectList(namespace + ".listSearch", sch);
   }
 
   @Override
-  public List<BoardVO> listCriteria(Criteria cri) throws Exception {
+  public int listSearchCount(Search sch) throws Exception {
 
-    return session.selectList(namespace + ".listCriteria", cri);
-  }
-
-  @Override
-  public int countPaging(Criteria cri) throws Exception {
-
-    return session.selectOne(namespace + ".countPaging", cri);
-  }
-
-  @Override
-  public List<BoardVO> listSearch(SearchCriteria cri) throws Exception {
-
-    return session.selectList(namespace + ".listSearch", cri);
-  }
-
-  @Override
-  public int listSearchCount(SearchCriteria cri) throws Exception {
-
-    return session.selectOne(namespace + ".listSearchCount", cri);
+    return session.selectOne(namespace + ".listSearchCount", sch);
   }
 }

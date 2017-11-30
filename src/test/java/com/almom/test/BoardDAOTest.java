@@ -15,8 +15,7 @@ import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import com.almom.domain.BoardVO;
-import com.almom.domain.Criteria;
-import com.almom.domain.SearchCriteria;
+import com.almom.domain.Search;
 import com.almom.persistence.BoardDAO;
 
 //@WebAppConfiguration
@@ -65,13 +64,6 @@ public class BoardDAOTest {
   @Test
   public void testUpdate() throws Exception {
 
- // class_name, class_category, class_type,
- // class_minStudentNum, class_maxStudentNum, class_currentStudentNum,
- // class_coverImagePath, class_tutorIntroduce, class_classIntroduce,
- // class_target, class_pricePerHour, class_timePerDay, class_dayPerMonth, class_price,
- // class_placeComment, class_notice 
- 
-	  
     BoardVO board = new BoardVO();
     board.setClass_name("수정한 클래스 제목 ");
     board.setClass_category(1);
@@ -106,32 +98,6 @@ public class BoardDAOTest {
   }
 
   @Test
-  public void testListPage() throws Exception {
-
-    int page = 3;
-
-    List<BoardVO> list = dao.listPage(page);
-
-    for (BoardVO boardVO : list) {
-      logger.info(boardVO.getClass_id() + ":" + boardVO.getClass_name());
-    }
-  }
-
-  @Test
-  public void testListCriteria() throws Exception {
-
-    Criteria cri = new Criteria();
-    cri.setPage(2);
-    cri.setPerPageNum(20);
-
-    List<BoardVO> list = dao.listCriteria(cri);
-
-    for (BoardVO boardVO : list) {
-      logger.info(boardVO.getClass_id() + ":" + boardVO.getClass_name());
-    }
-  }
-
-  @Test
   public void testURI() throws Exception {
 
     UriComponents uriComponents = UriComponentsBuilder.newInstance().path("/board/read").queryParam("class_id", 12)
@@ -152,24 +118,4 @@ public class BoardDAOTest {
     logger.info(uriComponents.toString());
   }
 
-  @Test
-  public void testDynamic1() throws Exception {
-
-    SearchCriteria cri = new SearchCriteria();
-    cri.setPage(1);
-    cri.setKeyword("글");
-    cri.setSearchType("t");
-
-    logger.info("=====================================");
-
-    List<BoardVO> list = dao.listSearch(cri);
-
-    for (BoardVO boardVO : list) {
-      logger.info(boardVO.getClass_id() + ": " + boardVO.getClass_name());
-    }
-
-    logger.info("=====================================");
-
-    logger.info("COUNT: " + dao.listSearchCount(cri));
-  }
 }

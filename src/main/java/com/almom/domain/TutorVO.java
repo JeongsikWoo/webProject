@@ -21,6 +21,7 @@ public class TutorVO {
 	}
 
 	public String getTutor_name() {
+		System.out.println("TUTORNAME : " + tutor_name);
 		return tutor_name;
 	}
 

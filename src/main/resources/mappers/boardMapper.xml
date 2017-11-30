@@ -44,52 +44,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
  <select id="listAll" resultType="com.almom.domain.BoardVO">
  <![CDATA[
- select 
-   c.TUTOR_tutor_id, c.class_id, c.class_regdate, c.class_coverImagePath, c.class_name, c.class_pricePerHour, c.class_type, c.class_score,
-   t.tutor_id, t.tutor_name, u.user_profileImagePath
+  select 
+   c.class_id, t.tutor_name, u.user_profileImagePath, c.class_regdate, c.class_coverImagePath, c.class_name, c.class_pricePerHour, c.class_type, c.class_score
  from 
-   CLASS c, TUTOR t, USER u
- where
- 	(c.TUTOR_tutor_id=t.tutor_id
- AND
-	t.USER_user_id = u.user_id)
- ORDER BY c.class_regdate DESC;
+   CLASS c left outer join TUTOR t on c.TUTOR_tutor_id = t.tutor_id
+   left outer join USER u on t.USER_user_id = u.user_id;
  ]]>  
- </select>
- 
- <select id="listPage" resultType="BoardVO">
- <![CDATA[
- select 
-   class_id, class_name, class_regdate, TUTOR_tutor_id 
- from 
-   CLASS
- where class_id > 0 
- order by class_id desc, class_regdate desc
- limit #{page}, 10
- ]]>
- </select>
-
- <select id="listCriteria" resultType="BoardVO">
- <![CDATA[
- select 
-   class_id, class_name, class_regdate, TUTOR_tutor_id
- from 
-   CLASS 
- where class_id > 0
- order by class_id desc, class_regdate desc
- limit #{pageStart}, #{perPageNum}
- ]]>
- </select>
-
- <select id="countPaging" resultType="int">
- <![CDATA[
- select 
-   count(class_id) 
- from 
-   CLASS
- where 
-   class_id > 0 
- ]]>
  </select>
 
 <sql id="search">
@@ -120,13 +80,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </sql>
  
 <select id="listSearch" resultType="BoardVO">
-<![CDATA[  
+<![CDATA[
   select * 
   from CLASS 
-  where class_id > 0 
-]]>  
+  where class_id > 0
+]]>
 
-  <include refid="search"></include>
+<include refid="search"></include>
   
 <![CDATA[    
   order by class_id desc

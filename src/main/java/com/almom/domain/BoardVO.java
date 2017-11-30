@@ -25,6 +25,24 @@ public class BoardVO {
 	private Double class_score;
 	private Integer TUTOR_tutor_id;
 	private Integer TUTOR_USER_user_id;
+	private UserVO uservo;
+	private TutorVO tutorvo;
+
+	public UserVO getUservo() {
+		return uservo;
+	}
+
+	public void setUservo(UserVO uservo) {
+		this.uservo = uservo;
+	}
+
+	public TutorVO getTutorvo() {
+		return tutorvo;
+	}
+
+	public void setTutorvo(TutorVO tutorvo) {
+		this.tutorvo = tutorvo;
+	}
 
 	public Integer getClass_id() {
 		return class_id;
@@ -212,6 +230,9 @@ public class BoardVO {
 				+ class_target + ", class_pricePerHour=" + class_pricePerHour + ", class_timePerDay=" + class_timePerDay
 				+ ", class_dayPerMonth=" + class_dayPerMonth + ", class_price=" + class_price + ", class_placeComment="
 				+ class_placeComment + ", class_notice=" + class_notice + ", class_status=" + class_status
-				+ ", TUTOR_tutor_id=" + TUTOR_tutor_id + ", TUTOR_USER_user_id=" + TUTOR_USER_user_id + "]";
+				+ ", class_score=" + class_score + ", TUTOR_tutor_id=" + TUTOR_tutor_id + ", TUTOR_USER_user_id="
+				+ TUTOR_USER_user_id + ", uservo=" + uservo + ", tutorvo=" + tutorvo + "]";
 	}
+	
+	
 }
