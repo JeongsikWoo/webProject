@@ -5,51 +5,96 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <mapper namespace="com.almom.mapper.BoardMapper">
 
- <insert id="create">
- insert into CLASS (class_name, class_category, class_type, class_minStudentNum, class_maxStudentNum,
- class_currentStudentNum, class_coverImagePath, class_tutorIntroduce, class_classIntroduce, class_target,
- class_pricePerHour, class_timePerDay, class_dayPerMonth, class_price, class_placeComment, class_notice,
- class_status, class_score, TUTOR_tutor_id, TUTOR_USER_user_id) 
- values(#{class_name}, #{class_category}, #{class_type}, #{class_minStudentNum}, #{class_maxStudentNum},
- #{class_currentStudentNum}, #{class_coverImagePath}, #{class_tutorIntroduce}, #{class_classIntroduce}, #{class_target},
- #{class_pricePerHour}, #{class_timePerDay}, #{class_dayPerMonth}, #{class_price}, #{class_placeComment}, #{class_notice},
- #{class_status}, 5.0, #{TUTOR_tutor_id}, #{TUTOR_USER_user_id})
- </insert>
+<insert id="create">
+	 insert into CLASS
+		 (class_name, class_category, class_type, class_minStudentNum, class_maxStudentNum,
+		 class_currentStudentNum, class_coverImagePath, class_tutorIntroduce, class_classIntroduce, class_target,
+		 class_pricePerHour, class_timePerDay, class_dayPerMonth, class_price, class_placeComment, class_notice,
+		 class_status, class_score, TUTOR_tutor_id, TUTOR_USER_user_id) 
+	 values
+		 (#{class_name}, #{class_category}, #{class_type}, #{class_minStudentNum}, #{class_maxStudentNum},
+		 #{class_currentStudentNum}, #{class_coverImagePath}, #{class_tutorIntroduce}, #{class_classIntroduce}, #{class_target},
+		 #{class_pricePerHour}, #{class_timePerDay}, #{class_dayPerMonth}, #{class_price}, #{class_placeComment}, #{class_notice},
+		 #{class_status}, 5.0, #{TUTOR_tutor_id}, #{TUTOR_USER_user_id})
+</insert>
 
- <select id="read" resultType="com.almom.domain.BoardVO">
- select 
-   class_id, class_name, class_regdate, class_category, class_type,
-   class_minStudentNum, class_maxStudentNum, class_currentStudentNum,
-   class_coverImagePath, class_tutorIntroduce, class_classIntroduce,
-   class_target, class_pricePerHour, class_timePerDay, class_dayPerMonth,
-   class_price, class_placeComment, class_notice, class_status, class_score, TUTOR_tutor_id
- from 
-   CLASS 
- where
-   class_id = #{class_id}
- </select>
+<select id="read" resultType="com.almom.domain.BoardVO">
+	 select 
+	   class_id, class_name, class_regdate, class_category, class_type,
+	   class_minStudentNum, class_maxStudentNum, class_currentStudentNum,
+	   class_coverImagePath, class_tutorIntroduce, class_classIntroduce,
+	   class_target, class_pricePerHour, class_timePerDay, class_dayPerMonth,
+	   class_price, class_placeComment, class_notice, class_status, class_score, TUTOR_tutor_id
+	 from 
+	   CLASS 
+	 where
+	   class_id = #{class_id}
+</select>
 
- <update id="update">
- update CLASS  set class_id =#{class_id}, class_name =#{class_name}, class_regdate =#{class_regdate}, class_category =#{class_category},
- class_type =#{class_type}, class_minStudentNum =#{class_minStudentNum}, class_maxStudentNum =#{class_maxStudentNum},
- class_coverImagePath =#{class_coverImagePath}, class_tutorIntroduce =#{class_tutorIntroduce}, class_classIntroduce =#{class_classIntroduce},
- class_target =#{class_target}, class_pricePerHour =#{class_pricePerHour}, class_timePerDay =#{class_timePerDay}, class_dayPerMonth =#{class_dayPerMonth}, class_price =#{class_price},
- class_placeComment =#{class_placeComment}, class_notice =#{class_notice}, class_status =#{class_status}
- where class_id = #{class_id}
- </update>
+<update id="update">
+	update CLASS set
+		class_id =#{class_id}, class_name =#{class_name}, class_regdate =#{class_regdate}, class_category =#{class_category},
+		class_type =#{class_type}, class_minStudentNum =#{class_minStudentNum}, class_maxStudentNum =#{class_maxStudentNum},
+		class_coverImagePath =#{class_coverImagePath}, class_tutorIntroduce =#{class_tutorIntroduce}, class_classIntroduce =#{class_classIntroduce},
+		class_target =#{class_target}, class_pricePerHour =#{class_pricePerHour}, class_timePerDay =#{class_timePerDay}, class_dayPerMonth =#{class_dayPerMonth}, class_price =#{class_price},
+		class_placeComment =#{class_placeComment}, class_notice =#{class_notice}, class_status =#{class_status}
+	where
+		class_id = #{class_id}
+</update>
 
  <delete id="delete">
- delete from CLASS where class_id = #{class_id}
+ 	delete from CLASS where class_id = #{class_id}
  </delete>
 
  <select id="listAll" resultType="com.almom.domain.BoardVO">
- <![CDATA[
-  select 
-   c.class_id, t.tutor_name, u.user_profileImagePath, c.class_regdate, c.class_coverImagePath, c.class_name, c.class_pricePerHour, c.class_type, c.class_score
- from 
-   CLASS c left outer join TUTOR t on c.TUTOR_tutor_id = t.tutor_id
-   left outer join USER u on t.USER_user_id = u.user_id;
- ]]>  
+	 <![CDATA[
+		 select 
+		   c.class_id, t.tutor_name, u.user_profileImagePath, c.class_regdate, c.class_coverImagePath, c.class_name, c.class_pricePerHour, c.class_type, c.class_score
+		 from 
+		   CLASS c left outer join TUTOR t on c.TUTOR_tutor_id = t.tutor_id
+		   left outer join USER u on t.USER_user_id = u.user_id;
+	 ]]>  
+ </select>
+ 
+ <select id ="listPage" resultType="BoardVO">
+ 
+	 <![CDATA[
+		 select 
+		   c.class_id, t.tutor_name, u.user_profileImagePath, c.class_regdate, c.class_coverImagePath, c.class_name, c.class_pricePerHour, c.class_type, c.class_score
+		 from 
+		   CLASS c left outer join TUTOR t on c.TUTOR_tutor_id = t.tutor_id
+		   left outer join USER u on t.USER_user_id = u.user_id;
+		 where
+		 	c.class_id > 0
+		 order by
+		 	c.class_id desc, c.class_regdate desc
+		 limit #{page}, 10
+	 ]]> 
+ </select>
+ 
+ <select id ="listCriteria" resultType ="BoardVO">
+ 	<![CDATA[
+	 	select
+		   class_id, class_regdate, class_coverImagePath, class_name, class_pricePerHour, class_type, class_score
+		 from 
+		   CLASS
+		 where
+		 	class_id > 0
+		 order by
+		 	class_id desc, class_regdate desc
+	 	limit #{pageStart}, #{perPageNum}
+ 	]]>
+</select>
+ 
+ <select id="countPaging" resultType="int">
+	 <![CDATA[
+		 select 
+		   count(class_id) 
+		 from 
+		   CLASS 
+		 where 
+		   class_id > 0 
+	 ]]>
  </select>
 
 <sql id="search">
@@ -58,24 +103,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
      and class_name like CONCAT('%', #{keyword}, '%')
    </if>
    <if test="searchType == 'c'.toString()">
-     and content like CONCAT('%', #{keyword}, '%')
-   </if>
-   <if test="searchType == 'w'.toString()">
-     and TUTOR_tutor_id like CONCAT('%', #{keyword}, '%')
-   </if>     
-   <if test="searchType == 'tc'.toString()">
-     and ( class_name like CONCAT('%', #{keyword}, '%') OR content like CONCAT('%', #{keyword}, '%'))
-   </if>        
-   <if test="searchType == 'cw'.toString()">
-     and ( content like CONCAT('%', #{keyword}, '%') OR TUTOR_tutor_id like CONCAT('%', #{keyword}, '%'))
-   </if>        
-   <if test="searchType == 'tcw'.toString()">
-     and (   class_name like CONCAT('%', #{keyword}, '%') 
-           OR 
-             content like CONCAT('%', #{keyword}, '%') 
-           OR 
-             TUTOR_tutor_id like CONCAT('%', #{keyword}, '%'))
-   </if>              
+     and tutor_name like CONCAT('%', #{keyword}, '%')
+   </if>             
  </if>  
 </sql>
  
@@ -85,23 +114,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   from CLASS 
   where class_id > 0
 ]]>
-
 <include refid="search"></include>
   
 <![CDATA[    
   order by class_id desc
-  limit #{pageStart}, #{perPageNum}
 ]]>  
 </select>
-  
-<select id="listSearchCount" resultType="int">
-<![CDATA[  
-  select count(class_id) 
-  from CLASS
-  where class_id > 0 
-]]>
-  <include refid="search"></include>
- 
-</select>
-  
 </mapper>

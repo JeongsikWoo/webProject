@@ -24,14 +24,12 @@ public class UserServiceImpl implements UserService {
 	public void regist(UserVO user) throws Exception {
 		// TODO Auto-generated method stub
 		logger.info("service " + user.toString());
-		System.out.println("���� : ȸ������ �� �α�");
 		dao.insertUser(user);
 	}
 
 	@Override
 	public void registTutor(TutorVO tutor, CertificateVO certificate) throws Exception {
 		// TODO Auto-generated method stub
-		logger.info("service " + tutor.toString());
 		dao.insertTutor(tutor);
 		dao.insertCertificate(certificate);
 
