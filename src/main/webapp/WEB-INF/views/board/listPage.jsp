@@ -87,6 +87,7 @@
 
 
 	<div class="footer">
+		<!--  
 		<div class="pagination">
 			<ul class="pagination">
 				<c:if test="${pageMaker.prev}">
@@ -106,6 +107,7 @@
 				</c:if>
 			</ul>
 		</div>
+		-->
 		
 		<div class="info">
 			<h5>알몸주식회사</h5>

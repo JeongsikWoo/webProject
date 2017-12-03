@@ -4,158 +4,179 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ page session="false"%>
 
-<%@include file="../include/header.jsp"%>
-
 <!-- Main content -->
 <section class="content">
-	<div class="row">
-		<!-- left column -->
 
-
-		<div class="col-md-12">
-			<!-- general form elements -->
-			<div class='box'>
-				<div class="box-header with-border">
-					<h3 class="box-title">Board List</h3>
-				</div>
-
-
-				<div class='box-body'>
-
-					<select name="searchType">
-						<option value="n"
-							<c:out value="${cri.searchType == null?'selected':''}"/>>
-							---</option>
-						<option value="t"
-							<c:out value="${cri.searchType eq 't'?'selected':''}"/>>
-							Title</option>
-						<option value="c"
-							<c:out value="${cri.searchType eq 'c'?'selected':''}"/>>
-							Content</option>
-						<option value="w"
-							<c:out value="${cri.searchType eq 'w'?'selected':''}"/>>
-							Writer</option>
-						<option value="tc"
-							<c:out value="${cri.searchType eq 'tc'?'selected':''}"/>>
-							Title OR Content</option>
-						<option value="cw"
-							<c:out value="${cri.searchType eq 'cw'?'selected':''}"/>>
-							Content OR Writer</option>
-						<option value="tcw"
-							<c:out value="${cri.searchType eq 'tcw'?'selected':''}"/>>
-							Title OR Content OR Writer</option>
-					</select> <input type="text" name='keyword' id="keywordInput"
-						value='${cri.keyword }'>
-					<button id='searchBtn'>Search</button>
-					<button id='newBtn'>New Board</button>
-
-				</div>
-			</div>
-
-
-			<div class="box">
-				<div class="box-header with-border">
-					<h3 class="box-title">LIST PAGING</h3>
-				</div>
-				<div class="box-body">
-					<table class="table table-bordered">
-						<tr>
-							<th style="width: 10px">BNO</th>
-							<th>TITLE</th>
-							<th>WRITER</th>
-							<th>REGDATE</th>
-							<th style="width: 40px">VIEWCNT</th>
-						</tr>
-
-						<c:forEach items="${list}" var="boardVO">
-
-							<tr>
-								<td>${boardVO.bno}</td>
-								<td><a
-									href='/sboard/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&bno=${boardVO.bno}'>
-										${boardVO.title} </a></td>
-								<td>${boardVO.writer}</td>
-								<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm"
-										value="${boardVO.regdate}" /></td>
-								<td><span class="badge bg-red">${boardVO.viewcnt }</span></td>
-							</tr>
-
-						</c:forEach>
-
-					</table>
-				</div>
-				<!-- /.box-body -->
-
-
-				<div class="box-footer">
-
-					<div class="text-center">
-						<ul class="pagination">
-
-							<c:if test="${pageMaker.prev}">
-								<li><a
-									href="list${pageMaker.makeSearch(pageMaker.startPage - 1) }">&laquo;</a></li>
-							</c:if>
-
-							<c:forEach begin="${pageMaker.startPage }"
-								end="${pageMaker.endPage }" var="idx">
-								<li
-									<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
-									<a href="list${pageMaker.makeSearch(idx)}">${idx}</a>
-								</li>
-							</c:forEach>
-
-							<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-								<li><a
-									href="list${pageMaker.makeSearch(pageMaker.endPage +1) }">&raquo;</a></li>
-							</c:if>
-
-						</ul>
-					</div>
-
-				</div>
-				<!-- /.box-footer-->
-			</div>
+	<!-- header -->
+	<div class="header">
+		<!-- 검색 기능 -->
+		<div id="search">  
+			<select name="searchType">
+				<option value="n" <c:out value="${cri.searchType == null?'selected':''}"/>>---</option>
+				<option value="cn" <c:out value="${cri.searchType eq 'cn'?'selected':''}"/>>수업이름</option>
+				<option value="tn" <c:out value="${cri.searchType eq 'tn'?'selected':''}"/>>튜터이름</option>
+				<option value="cntn" <c:out value="${cri.searchType eq 'cntn'?'selected':''}"/>>수업이름 OR 튜터이름</option>
+			</select>
+			<select name="place_district">
+				<option value="place_all" <c:out value="${cri.place_district == null?'selected':''}"/>>전체 지역</option>
+				<option value="place_1" <c:out value="${cri.place_district == null?'selected':''}"/>>홍대</option>
+				<option value="place_2" <c:out value="${cri.place_district == null?'selected':''}"/>>강남</option>
+				<option value="place_3" <c:out value="${cri.place_district == null?'selected':''}"/>>신촌</option>
+				<option value="place_4" <c:out value="${cri.place_district == null?'selected':''}"/>>이태원</option>
+			</select>
+			<select name="class_category">
+				<option value="category_all" <c:out value="${cri.class_category == null?'selected':''}"/>>전체 카테고리</option>
+				<option value="category_1" <c:out value="${cri.class_category == null?'selected':''}"/>>필라테스</option>
+				<option value="category_2" <c:out value="${cri.class_category == null?'selected':''}"/>>휘트니스</option>
+				<option value="category_3" <c:out value="${cri.class_category == null?'selected':''}"/>>요가</option>
+				<option value="category_4" <c:out value="${cri.class_category == null?'selected':''}"/>>기체조</option>
+			</select>
+			<input type="text" name='keyword' id="keywordInput" size="100" maxlength="30" placeholder="수업 또는 튜터를 검색해보세요" value='${cri.keyword }'>
+			<button id='searchBtn'>Search</button>
+			<br><br>
 		</div>
-		<!--/.col (left) -->
-
+		
+		<div id="title">
+			<h2 class="title">CLASS - 11월의 추천강의를 살펴보세요</h2>
+		</div>
 	</div>
-	<!-- /.row -->
+	<!-- /.header -->
+	
+	
+	
+	<div class="body">
+		<!-- 대표사진, 클래스이름, 튜터프로필사진, 튜터이름, 시간당 가격, 그룹수업, 평점, 위치 -->
+		<table class="table table-bordered">
+			<tr>
+				<th>수업번호</th>
+				<th>커버이미지</th>
+				<th>수업이름</th>
+				<th>시간당가격</th>
+				<th>튜터이름</th>
+				<th>유저프로필이미지</th>
+				<th>클래스타입</th>
+				<th>평점</th>
+				<th>장소</th>
+			</tr>
+			<c:choose>
+				<c:when test="${not empty list}">
+					<c:forEach items="${list}" var="boardVO">
+						<tr>
+							<td>${boardVO.class_id}</td>
+							<td><a href='/sboard/readPage${pageMaker.makeSearch(pageMaker.cri.page) }&class_id=${boardVO.class_id}'>${boardVO.class_name} </a></td>
+							<td style="width: 10px">${boardVO.class_coverImagePath}</td>
+							<!--
+								<td><a href='/board/read?class_id=${boardVO.class_id}'>${boardVO.class_name}</a></td>
+							-->
+							<td>${boardVO.class_pricePerHour}</td>
+							<td>${boardVO.tutorvo.tutor_id}</td>
+							<!-- 튜터이름 -->
+							<td></td>
+							<!-- 튜터프로필 -->
+							<td>${boardVO.class_type}</td>
+							<td>${boardVO.class_score}</td>
+							<!-- 평점, 리뷰개수 -->
+							<td>장소</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr><td colspan="9">등록된 수업이 없습니다.</td></tr>
+				</c:otherwise>
+			</c:choose>
+		</table>
+		<br><br>
+	</div>
+	<!-- /.body -->
+
+
+
+	<div class="footer">
+		<!--  
+		<div class="pagination">
+			<ul class="pagination">
+				<c:if test="${pageMaker.prev}">
+					<li><a href="listPage${pageMaker.makeQuery(pageMaker.startPage - 1) }">&laquo;</a></li>
+				</c:if>
+
+				<c:forEach begin="${pageMaker.startPage }"
+					end="${pageMaker.endPage }" var="idx">
+					<li
+						<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
+						<a href="listPage${pageMaker.makeQuery(idx)}">${idx}</a>
+					</li>
+				</c:forEach>
+
+				<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+					<li><a href="listPage${pageMaker.makeQuery(pageMaker.endPage +1) }">&raquo;</a></li>
+				</c:if>
+			</ul>
+		</div>
+		-->
+		
+		<!--
+		<div class="pagination">
+			<ul class="pagination">
+				<c:if test="${pageMaker.prev}">
+					<li><a href="listPage${pageMaker.makeSearch(pageMaker.startPage - 1) }">&laquo;</a></li>
+				</c:if>
+
+				<c:forEach begin="${pageMaker.startPage }"
+					end="${pageMaker.endPage }" var="idx">
+					<li
+						<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
+						<a href="listPage${pageMaker.makeSearch(idx)}">${idx}</a>
+					</li>
+				</c:forEach>
+
+				<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+					<li><a href="listPage${pageMaker.makeSearch(pageMaker.endPage +1) }">&raquo;</a></li>
+				</c:if>
+			</ul>
+		</div>
+		-->
+		
+		<div class="info">
+			<h5>알몸주식회사</h5>
+		</div>
+	</div>
+	<!-- /.footer-->
 </section>
-<!-- /.content -->
 
-
-<script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
 	var result = '${msg}';
-
 	if (result == 'SUCCESS') {
 		alert("처리가 완료되었습니다.");
 	}
-</script>
-
-<script>
+	
+	$(".pagination li a").on("click", function(event) {
+		event.preventDefault();
+		var targetPage = $(this).attr("href");
+		var jobForm = $("#jobForm");
+		jobForm.find("[name='page']").val(targetPage);
+		jobForm.attr("action", "/board/listPage").attr("method", "get");
+		jobForm.submit();
+	});
+	
 	$(document).ready(
 			function() {
-
 				$('#searchBtn').on(
 						"click",
 						function(event) {
-
 							self.location = "list"
 									+ '${pageMaker.makeQuery(1)}'
-									+ "&searchType="
-									+ $("select option:selected").val()
+									+ "&searchType=cntn"
+									+ "&place_district=" + $("select option:selected").val()
+									+ "&class_category=" + $("select option:selected").val()
 									+ "&keyword=" + $('#keywordInput').val();
-
 						});
-
-				$('#newBtn').on("click", function(evt) {
-
-					self.location = "register";
-
-				});
-
 			});
 </script>
 
-<%@include file="../include/footer.jsp"%>
+
+<form id="jobForm">
+  <input type='hidden' name="page" value=${pageMaker.cri.perPageNum}>
+  <input type='hidden' name="perPageNum" value=${pageMaker.cri.perPageNum}>
+</form>

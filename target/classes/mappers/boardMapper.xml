@@ -99,13 +99,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <sql id="search">
  <if test="searchType != null" > 
-   <if test="searchType == 't'.toString()">
+   <if test="searchType == 'cn'.toString()">
      and class_name like CONCAT('%', #{keyword}, '%')
    </if>
-   <if test="searchType == 'c'.toString()">
+   <if test="searchType == 'tn'.toString()">
      and tutor_name like CONCAT('%', #{keyword}, '%')
-   </if>             
+   </if>
+   <if test="searchType == 'cntn'.toString()">
+     and ( class_name like CONCAT('%', #{keyword}, '%') OR tutor_name like CONCAT('%', #{keyword}, '%'))
+   </if>
  </if>  
+ 
+  <if test="place_district != null" > 
+  	<if test="place_district == 'place_1'.toString()"></if>
+  </if>
+  
+  <if test="class_category != null" > 
+  	<if test="class_category == 'category_1'.toString()"></if>
+  </if>
 </sql>
  
 <select id="listSearch" resultType="BoardVO">
@@ -120,4 +131,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   order by class_id desc
 ]]>  
 </select>
+
+<select id="listSearchCount" resultType="int">
+<![CDATA[  
+  select count(class_id) 
+  from CLASS 
+  where class_id > 0 
+]]>
+</select>
+
 </mapper>

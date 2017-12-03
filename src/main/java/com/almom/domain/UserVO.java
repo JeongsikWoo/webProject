@@ -7,7 +7,7 @@ public class UserVO {
 	private String user_password;
 	private String user_profileImagePath;
 	private Integer user_sex;
-	private Integer user_age;
+	private String user_birth;
 	private String user_job;
 	private String user_phoneNumber;
 	private String user_snsId;
@@ -48,11 +48,11 @@ public class UserVO {
 	public void setUser_sex(Integer user_sex) {
 		this.user_sex = user_sex;
 	}
-	public Integer getUser_age() {
-		return user_age;
+	public String getUser_birth() {
+		return user_birth;
 	}
-	public void setUser_age(Integer user_age) {
-		this.user_age = user_age;
+	public void setUser_birth(String user_birth) {
+		this.user_birth = user_birth;
 	}
 	public String getUser_job() {
 		return user_job;
@@ -72,12 +72,14 @@ public class UserVO {
 	public void setUser_snsId(String user_snsId) {
 		this.user_snsId = user_snsId;
 	}
-	
 	@Override
 	public String toString() {
 		return "UserVO [user_id=" + user_id + ", user_email=" + user_email + ", user_name=" + user_name
 				+ ", user_password=" + user_password + ", user_profileImagePath=" + user_profileImagePath
-				+ ", user_sex=" + user_sex + ", user_age=" + user_age + ", user_job=" + user_job + ", user_phoneNumber="
-				+ user_phoneNumber + ", user_snsId=" + user_snsId + "]";
+				+ ", user_sex=" + user_sex + ", user_birth=" + user_birth + ", user_job=" + user_job
+				+ ", user_phoneNumber=" + user_phoneNumber + ", user_snsId=" + user_snsId + "]";
 	}
+	
+	
+	
 }

@@ -30,29 +30,27 @@ public class SearchBoardController {
 
     logger.info(cri.toString());
 
-    // model.addAttribute("list", service.listCriteria(cri));
     model.addAttribute("list", service.listSearchCriteria(cri));
 
     PageMaker pageMaker = new PageMaker();
     pageMaker.setCri(cri);
 
-    // pageMaker.setTotalCount(service.listCountCriteria(cri));
     pageMaker.setTotalCount(service.listSearchCount(cri));
 
     model.addAttribute("pageMaker", pageMaker);
   }
 
   @RequestMapping(value = "/readPage", method = RequestMethod.GET)
-  public void read(@RequestParam("bno") int bno, @ModelAttribute("cri") SearchCriteria cri, Model model)
+  public void read(@RequestParam("class_id") int class_id, @ModelAttribute("cri") SearchCriteria cri, Model model)
       throws Exception {
 
-    model.addAttribute(service.read(bno));
+    model.addAttribute(service.read(class_id));
   }
 
   @RequestMapping(value = "/removePage", method = RequestMethod.POST)
-  public String remove(@RequestParam("bno") int bno, SearchCriteria cri, RedirectAttributes rttr) throws Exception {
+  public String remove(@RequestParam("class_id") int class_id, SearchCriteria cri, RedirectAttributes rttr) throws Exception {
 
-    service.remove(bno);
+    service.remove(class_id);
 
     rttr.addAttribute("page", cri.getPage());
     rttr.addAttribute("perPageNum", cri.getPerPageNum());
@@ -65,9 +63,9 @@ public class SearchBoardController {
   }
 
   @RequestMapping(value = "/modifyPage", method = RequestMethod.GET)
-  public void modifyPagingGET(int bno, @ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
+  public void modifyPagingGET(int class_id, @ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
 
-    model.addAttribute(service.read(bno));
+    model.addAttribute(service.read(class_id));
   }
 
   @RequestMapping(value = "/modifyPage", method = RequestMethod.POST)
